@@ -14,12 +14,13 @@ public class TaskLoadTest extends LoadTest {
     @BeforeAll
     public static void warming() {
         System.out.println("Warming started...");
-        for (int i = 0; i < 1_000_000; i++) {
+        for (int i = 0; i < 100_000; i++) {
             var randIntArray = Rand.genIntArray(100, -100, 100);
 
             // Put here call for those method that should be compiled.
             task.findMaxElement(randIntArray);
-            task.insetElementInCenter(randIntArray, 0);
+            task.insertElementInCenter(randIntArray, 0);
+            task.bubbleSort(randIntArray);
         }
     }
 
@@ -46,13 +47,28 @@ public class TaskLoadTest extends LoadTest {
     }
 
     @Test
-    void insetElementInCenter() {
+    void insertElementInCenter() {
         loadTest(50_000_000L, 10_000_000L, (iteration) -> {
             var randomIntArray = Rand.genIntArray(iteration, -100, 100);
 
             startMeasure();
 
-            task.insetElementInCenter(randomIntArray, 0);
+            task.insertElementInCenter(randomIntArray, 0);
+
+            stopMeasure();
+            printMeasure();
+        });
+        chartMeasure();
+    }
+
+    @Test
+    void bubbleSort() {
+        loadTest(50_000L, 10_000L, (iteration) -> {
+            var randomIntArray = Rand.genIntArray(iteration, -100, 100);
+
+            startMeasure();
+
+            task.bubbleSort(randomIntArray);
 
             stopMeasure();
             printMeasure();

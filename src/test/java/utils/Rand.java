@@ -18,6 +18,14 @@ public class Rand {
         return result;
     }
 
+    public static int[] genIntSequencedArray(int startValue, int endValue) {
+        int[] result = new int[endValue - startValue];
+        for (int index = 0, value = startValue; index < result.length; index++, value++) {
+            result[index] = value;
+        }
+        return result;
+    }
+
     public static String generateRandomString(long length) {
         return generateRandomString((int) length); // TODO: call many times required for long length
     }

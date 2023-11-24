@@ -84,7 +84,7 @@ public abstract class LoadTest {
     private static void saveTimeChart(DefaultCategoryDataset lineChartDataset) {
         var testName = Thread.currentThread().getStackTrace()[3].getMethodName();
         var timeChartObject = ChartFactory.createLineChart(testName + " time",
-                "Load",
+                "Load steps (step " + step + ")",
                 "Time (milliseconds)",
                 lineChartDataset,
                 PlotOrientation.VERTICAL,
@@ -97,7 +97,7 @@ public abstract class LoadTest {
     private static void saveSpaceChart(DefaultCategoryDataset lineChartDataset) {
         var testName = Thread.currentThread().getStackTrace()[3].getMethodName();
         var timeChartObject = ChartFactory.createLineChart(testName + " space",
-                "Load",
+                "Load steps (step " + step + ")",
                 "Space (mb)",
                 lineChartDataset,
                 PlotOrientation.VERTICAL,

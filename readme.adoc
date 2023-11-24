@@ -1,0 +1,101 @@
+== Task template
+
+Slogan: Stop solving problems in Main class.
+
+== Table of contents
+
+- Description
+- About project
+- How to use
+
+== Description
+
+This is *super lightweight* template project for algorithm testing.
+
+This template is ideal for solving *leetcode* problems.
+
+Two most important features:
+
+- The project contains helper class *Rand* for generating random strings, numbers, arrays, sequences etc... , which will make it easy to test your tasks.
+
+- The project contains an abstract *LoadTest* class for your test classes, which makes it easy to run load tests on your algorithm.
+The class makes it easy to run a series of tests that capture runtime and memory changes. Optionally, you can enable output of measurements to the console. Optionally, you can save the measurements as a graph in a png file.
+
+== About project
+
+This is Java + Maven project.
+Project has 2 dependencies:
+
+- JUnit for testing
+- JFreeChart for draw test measurements
+
+== How to use
+
+1. Download or clone this project.
+
+2. [Optional] Add as template
+- Open project in IDEA.
+- File -> New Projects Setup -> Save project as template...
+
+3. [Optional] Create project for your problem
+- File -> New -> Project...
+- Scroll left panel to the end and choice this previously saved template.
+- Create new project from template
+
+4. Run maven `clean install` in order to update dependencies
+5. Solve you problem in some java class
+6. Make test class in test directory: link:src/test/java/[ src/test/java/]
+- There is examples of link:src/test/java/TaskUnitTest.java[Unit test class] and link:src/test/java/TaskLoadTest.java[Load test class]
+- Feel free to use the link:src/test/java/utils/Rand.java[Rand] class to generate test data
+
+== How to load testing
+
+See example in link:src/test/java/TaskLoadTest.java[TaskLoadTest].
+
+=== Make test class extended from link:src/test/java/utils/LoadTest.java[LoadTest]
+
+=== [Optional] Defined warming method
+
+We should to call the class method many times for it to become precompiled. This is necessary so that JIT compilation does not occur directly during the test.
+
+Example:
+[source,java]
+----
+@BeforeAll
+public static void warming() {
+    for (int i = 0; i < 100000; i++) {
+        // Put here call for those method that should be compiled.
+    }
+}
+----
+
+=== Defined load test method
+
+Example:
+[source,java]
+----
+@Test
+void findLetterIndexInText() {
+    loadTest(50000000L, 10000000L, (iteration) -> {
+        // Here you can define data for every case. Use 'iteration' for counting.
+        var randomIntArray = Rand.genIntArray(iteration, -1000, 1000);
+
+        // You should start measuring by call startMeasure()
+        startMeasure();
+
+        // Put here your interested code between start and stop measuring
+        task.findMaxElement(randomIntArray);
+
+        // You should stop measuring by call stopMeasure()
+        stopMeasure();
+
+        // Optionally you can print current iteration measures.
+        printMeasure();
+    });
+
+    // Optionally you can save chart with measures after load test.
+    chartMeasure();
+}
+----
+
+Run it as a common unit test.
